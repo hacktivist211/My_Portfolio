@@ -18,6 +18,69 @@
             box-sizing: border-box;
         }
 
+        /* --- MODAL STYLES --- */
+        .modal-icon-container {
+            perspective: 1000px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal-icon-flip {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-180deg);
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #success-modal.active .modal-icon-flip {
+            transform: rotateY(0deg); 
+        }
+
+        .modal-icon-front,
+        .modal-icon-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-icon-front {
+            background: transparent; 
+        }
+
+        .modal-icon-back {
+            transform: rotateY(180deg);
+        }
+
+        #success-modal .modal-content h3,
+        #success-modal .modal-content p {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.6s ease;
+        }
+
+        #success-modal.active .modal-content h3,
+        #success-modal.active .modal-content p {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 1.2s; 
+        }
+
+        #success-modal.active .modal-content p:nth-of-type(2) {
+            transition-delay: 1.4s;
+        }
+        #success-modal.active .modal-content p:nth-of-type(3) {
+            transition-delay: 1.6s;
+        }
+
+        /* --- REST OF CSS --- */
         :root {
             /* Danger Red Theme Colors */
             --red-team-red: #ff3366;
@@ -60,7 +123,13 @@
             color: var(--text-primary);
             font-family: 'Exo 2', sans-serif;
             overflow-x: hidden;
-            cursor: none;
+            /* CHANGE: Restored native cursor for stability */
+            cursor: default; 
+        }
+
+        /* CHANGE: Hide custom cursor divs completely */
+        .cursor, .cursor-follower {
+            display: none !important;
         }
 
         ::selection {
@@ -81,40 +150,7 @@
             border-radius: 10px;
         }
 
-        /* Custom Cursor */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--red-team-red);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            transition: all 0.1s ease;
-            z-index: 10000;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-follower {
-            width: 8px;
-            height: 8px;
-            background: var(--red-team-red);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 9999;
-        }
-
-        .cursor.hover {
-            width: 40px;
-            height: 40px;
-            border-color: var(--neon-cyan-accent);
-            background: rgba(255, 51, 102, 0.1);
-        }
-
-        /* Preloader */
+        /* --- PRELOADER STYLES --- */
         .preloader {
             position: fixed;
             top: 0;
@@ -123,15 +159,27 @@
             height: 100vh;
             background: var(--dark-bg);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 100000;
-            transition: opacity 1s, visibility 1s;
         }
 
-        .preloader.loaded {
-            opacity: 0;
-            visibility: hidden;
+        .loader-bar-container {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 51, 102, 0.1);
+            border-radius: 2px;
+            margin-top: 20px;
+            overflow: hidden;
+            opacity: 0.5;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--red-team-red), var(--neon-cyan-accent));
+            box-shadow: 0 0 10px var(--red-team-red);
         }
 
         .loader-text {
@@ -142,7 +190,7 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradient 2s linear infinite;
+            animation: gradient 4s ease-in-out infinite; 
         }
 
         @keyframes gradient {
@@ -177,6 +225,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 30px var(--shadow-glow);
+            cursor: pointer;
         }
 
         .nav-link {
@@ -185,6 +234,8 @@
             color: var(--text-secondary);
             transition: all var(--animation-fast) ease;
             padding: 0.5rem 1rem;
+            /* CHANGE: Standard pointer on hover */
+            cursor: pointer;
         }
 
         .nav-link::before {
@@ -387,7 +438,8 @@
             letter-spacing: 1px;
             overflow: hidden;
             transition: all var(--animation-fast) ease;
-            cursor: pointer;
+            /* CHANGE: Standard pointer */
+            cursor: pointer; 
         }
 
         .btn-holographic::before {
@@ -432,6 +484,13 @@
             padding: 2rem;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* CHANGE: Standard pointer */
+            cursor: default;
+        }
+
+        /* Make card links interactive */
+        .future-card a {
+            cursor: pointer;
         }
 
         .future-card::before {
@@ -468,6 +527,8 @@
             font-weight: 500;
             transition: all var(--animation-fast) ease;
             overflow: hidden;
+            /* CHANGE: Standard pointer */
+            cursor: default;
         }
 
         .skill-orb::after {
@@ -623,6 +684,10 @@
             transform: scale(0.8) translateY(20px);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         #success-modal.active .modal-content {
@@ -645,13 +710,6 @@
             100% { left: 200%; }
         }
 
-        .modal-icon {
-            font-size: 4rem;
-            color: var(--neon-cyan-accent);
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px var(--neon-cyan-accent);
-        }
-
         .modal-close-btn {
             position: absolute;
             top: 1rem;
@@ -660,9 +718,10 @@
             border: none;
             color: var(--text-secondary);
             font-size: 2rem;
-            cursor: pointer;
+            cursor: pointer; /* CHANGE: Standard pointer */
             transition: color 0.3s;
             line-height: 1;
+            z-index: 10;
         }
 
         .modal-close-btn:hover {
@@ -673,17 +732,20 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 3rem; }
             .cursor, .cursor-follower { display: none; }
-            body { cursor: auto; }
             .modal-content { padding: 2rem; }
         }
     </style>
 </head>
 <body>
+    <!-- CHANGE: Cursor divs remain in DOM but are hidden via CSS to ensure no JS errors if referenced -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     
     <div class="preloader">
         <div class="loader-text">INITIALIZING...</div>
+        <div class="loader-bar-container">
+            <div class="loader-bar"></div>
+        </div>
     </div>
 
     <canvas id="particles-canvas"></canvas>
@@ -741,7 +803,7 @@
                         <div class="text-sm mt-2" style="color: var(--neon-cyan-accent);">HACKATHON WINS</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-number" data-target="5">0</div>
                         <div class="text-sm mt-2" style="color: var(--dark-red-accent);">TECHNOLOGIES</div>
                     </div>
                     <div class="stat-card">
@@ -880,7 +942,42 @@
     <div id="success-modal">
         <div class="modal-content">
             <button class="modal-close-btn" id="close-modal-btn">&times;</button>
-            <div class="modal-icon">✓</div>
+            
+            <div class="modal-icon-container">
+                <div class="modal-icon-flip">
+                    <!-- FRONT FACE: This contains the checkmark and is revealed on flip -->
+                    <div class="modal-icon-front">
+                        <svg viewBox="0 0 200 200" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="8" result="blur1"/>
+                                    <feFlood flood-color="var(--red-team-red)" flood-opacity="0.8"/>
+                                    <feComposite in2="blur1" operator="in"/>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                    <feGaussianBlur stdDeviation="15" result="blur2"/>
+                                    <feFlood flood-color="var(--red-team-red)" flood-opacity="0.5"/>
+                                    <feComposite in2="blur2" operator="in"/>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- Coin circle -->
+                            <circle cx="100" cy="100" r="90" fill="rgba(15,0,0,0.7)" stroke="var(--red-team-red)" stroke-width="8" filter="url(#neon-glow)"/>
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="var(--red-team-red)" stroke-width="4" opacity="0.5"/>
+                            <!-- Checkmark -->
+                            <path d="M50 100 L80 130 L150 70" stroke="var(--red-team-red)" stroke-width="20" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#neon-glow)"/>
+                        </svg>
+                    </div>
+                    <!-- BACK FACE: Empty or placeholder -->
+                    <div class="modal-icon-back"></div>
+                </div>
+            </div>
+
             <h3 class="text-2xl font-bold mb-2 glitch" data-text="TRANSMISSION COMPLETE" style="color: var(--red-team-red);">TRANSMISSION COMPLETE</h3>
             <p class="text-lg mb-4" style="color: var(--text-secondary);">Message received successfully.</p>
             <p class="text-sm" style="color: var(--neon-cyan-accent);">Expected reply within 24 hours.</p>
@@ -894,11 +991,11 @@
             // --- UPDATED DATA ---
             const skillsData = [
                 'Python', 'PyTorch', 'TensorFlow', 'JavaScript', 'scikit-learn', 'XGBoost', 'CatBoost', 'NLTK',
-                'Hugging Face', 'LangChain', 'Streamlit', 'Socket.io', 'FFmpeg', 'SQLite', 'Git', 'Conda',
+                'Hugging Face', 'LangChain', 'Streamlit',  'SQLite', 'Git', 'Conda',
                 'Deep Learning', 'NLP', 'Time Series', 'Anomaly Detection', 'Ensemble Models', 'Blockchain', 'IoT Security',
                 'Machine Learning', 'Model Development', 'Data Analytics', 'Decision Trees', 'Problem Solving',
                 // New Skills from latest projects
-                'RAG', 'ChromaDB', 'Ollama', 'OCR', 'Agents', 'Vector Search', 'Pydantic', 'Unstructured', 'Tesseract', 'Self-RAG', 'Automation'
+                'RAG', 'ChromaDB', 'Ollama', 'OCR', 'Agents', 'Vector Search', 'Pydantic',  'Tesseract', 'Self-RAG', 'Automation'
             ];
 
             const projectsData = [
@@ -906,7 +1003,7 @@
                     title: 'Advanced Directory Mapper',
                     description: 'Generates comprehensive tree-like directory structures optimized for LLMs context. Features intelligent file summarization (imports/defs), project type detection, caching, ignore patterns, and token estimation.',
                     repo: 'https://github.com/hacktivist211/DirectoryMapper',
-                    tech: ['Python', 'AST', 'CLI', 'LLM Context']
+                    tech: ['Python', 'CLI', 'LLM Context']
                 },
                 {
                     title: 'PrivateRAG Engine',
@@ -1034,35 +1131,59 @@
                 </div>
             `).join('');
 
-            // --- PRELOADER ---
+            // --- UPDATED PRELOADER LOGIC ---
             const preloader = document.querySelector('.preloader');
             const loaderText = document.querySelector('.loader-text');
-            gsap.to(loaderText, {
-                duration: 2,
+            const loaderBar = document.querySelector('.loader-bar');
+
+            const tl = gsap.timeline();
+
+            tl.to({}, { duration: 2.0 });
+
+            tl.to(loaderText, {
+                text: "LOADING MODULES...",
+                duration: 1.0,
+                ease: "none"
+            })
+            .to(loaderBar, {
+                width: "60%",
+                duration: 1.5,
+                ease: "power2.inOut"
+            }, "<")
+            .to({}, { duration: 1.5 });
+
+            tl.to(loaderText, {
+                text: "VERIFYING INTEGRITY...",
+                duration: 1.0,
+                ease: "none"
+            })
+            .to(loaderBar, {
+                width: "100%",
+                duration: 1.0,
+                ease: "power1.out"
+            }, "<")
+            .to({}, { duration: 1.0 });
+
+            tl.to(loaderText, {
                 text: "SYSTEM ONLINE",
-                ease: "none",
+                duration: 0.8,
+                ease: "none"
+            })
+            .to({}, { duration: 1.0 })
+            .to(preloader, {
+                opacity: 0,
+                duration: 1.5,
+                ease: "power2.inOut",
                 onComplete: () => {
-                    setTimeout(() => {
-                        preloader.classList.add('loaded');
-                    }, 500);
+                    preloader.style.visibility = 'hidden';
                 }
             });
 
-            // --- CUSTOM CURSOR ---
-            const cursor = document.querySelector('.cursor');
-            const cursorFollower = document.querySelector('.cursor-follower');
-            gsap.set(cursor, { xPercent: -50, yPercent: -50 });
-            gsap.set(cursorFollower, { xPercent: -50, yPercent: -50 });
 
-            window.addEventListener('mousemove', e => {
-                gsap.to(cursor, 0.1, { x: e.clientX, y: e.clientY });
-                gsap.to(cursorFollower, 0.3, { x: e.clientX, y: e.clientY });
-            });
+            // --- CHANGE: REMOVED CUSTOM CURSOR LOGIC ---
+            // The cursor is now handled by native OS CSS (cursor: default/pointer)
+            // No JS tracking needed.
 
-            document.querySelectorAll('a, button, .future-card, .skill-orb, input, textarea').forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            });
 
             // --- NAVBAR SCROLL ---
             const nav = document.querySelector('.nav-container');
@@ -1123,14 +1244,13 @@
             const submitBtn = document.getElementById('submit-btn');
 
             form.addEventListener('submit', function(e) {
-                e.preventDefault(); // Stop default redirect
+                e.preventDefault();
                 const originalText = submitBtn.innerText;
                 submitBtn.innerText = "TRANSMITTING...";
                 submitBtn.disabled = true;
 
                 const formData = new FormData(form);
                 
-                // Use AJAX to submit to FormSubmit
                 fetch("https://formsubmit.co/ajax/chennupatiniraj@gmail.com", {
                     method: "POST",
                     body: formData,
@@ -1140,15 +1260,12 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Success
                     modal.classList.add('active');
                     form.reset();
                     submitBtn.innerText = originalText;
                     submitBtn.disabled = false;
                 })
                 .catch(error => {
-                    // Even if error (likely CORS on some networks), show success for UI demo purposes
-                    // In a real backend, you would handle the error.
                     console.log("Form submitted (simulated success for demo):", error);
                     modal.classList.add('active');
                     form.reset();
@@ -1161,7 +1278,6 @@
                 modal.classList.remove('active');
             });
 
-            // Close modal on outside click
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.remove('active');
