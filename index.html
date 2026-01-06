@@ -73,13 +73,6 @@
             transition-delay: 1.2s; 
         }
 
-        #success-modal.active .modal-content p:nth-of-type(2) {
-            transition-delay: 1.4s;
-        }
-        #success-modal.active .modal-content p:nth-of-type(3) {
-            transition-delay: 1.6s;
-        }
-
         /* --- REST OF CSS --- */
         :root {
             /* Danger Red Theme Colors */
@@ -123,13 +116,7 @@
             color: var(--text-primary);
             font-family: 'Exo 2', sans-serif;
             overflow-x: hidden;
-            /* CHANGE: Restored native cursor for stability */
             cursor: default; 
-        }
-
-        /* CHANGE: Hide custom cursor divs completely */
-        .cursor, .cursor-follower {
-            display: none !important;
         }
 
         ::selection {
@@ -226,37 +213,84 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 30px var(--shadow-glow);
             cursor: pointer;
+            pointer-events: none; /* Text usually not clickable */
         }
-
+        
         .nav-link {
             position: relative;
             font-weight: 500;
             color: var(--text-secondary);
             transition: all var(--animation-fast) ease;
             padding: 0.5rem 1rem;
-            /* CHANGE: Standard pointer on hover */
             cursor: pointer;
+            display: block;
+        }
+        
+        /* Mobile Nav Specifics */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 75%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(5, 0, 5, 0.98);
+            backdrop-filter: blur(15px);
+            border-left: 1px solid var(--red-team-red);
+            z-index: 999;
+            padding: 5rem 2rem;
+            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--red-team-red), transparent);
-            transform: translateX(-50%);
-            transition: width var(--animation-fast) ease;
+        .mobile-menu.open {
+            right: 0;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
         }
 
-        .nav-link:hover {
-            color: var(--red-team-red);
-            text-shadow: 0 0 10px var(--shadow-glow);
-        }
-
-        .nav-link:hover::before {
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(2px);
+        }
+
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--red-team-red);
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-container { padding: 1rem; }
         }
 
         /* Hero Section */
@@ -354,7 +388,7 @@
 
         .hero-title {
             font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 10vw, 7rem);
+            font-size: clamp(2.5rem, 8vw, 7rem);
             font-weight: 900;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -373,7 +407,7 @@
 
         .hero-subtitle {
             font-family: 'Fira Code', monospace;
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: var(--red-team-red);
             opacity: 0;
             animation: fadeInUp 1s ease forwards;
@@ -428,7 +462,7 @@
         /* Holographic Button */
         .btn-holographic {
             position: relative;
-            padding: 1rem 2.5rem;
+            padding: 0.8rem 2rem;
             background: linear-gradient(45deg, rgba(255, 51, 102, 0.1), rgba(0, 255, 255, 0.1));
             border: 2px solid transparent;
             border-radius: 50px;
@@ -438,8 +472,11 @@
             letter-spacing: 1px;
             overflow: hidden;
             transition: all var(--animation-fast) ease;
-            /* CHANGE: Standard pointer */
-            cursor: pointer; 
+            cursor: pointer;
+            width: 100%; /* Mobile first full width */
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
         }
 
         .btn-holographic::before {
@@ -474,6 +511,10 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 40px var(--shadow-red-hover);
         }
+        
+        @media (min-width: 768px) {
+            .btn-holographic { width: auto; font-size: 1rem; padding: 1rem 2.5rem; }
+        }
 
         /* Futuristic Cards */
         .future-card {
@@ -481,14 +522,15 @@
             background: linear-gradient(135deg, rgba(15, 0, 0, 0.4), rgba(0, 20, 20, 0.4));
             border: 1px solid var(--border-primary);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* CHANGE: Standard pointer */
             cursor: default;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Make card links interactive */
         .future-card a {
             cursor: pointer;
         }
@@ -509,7 +551,7 @@
         }
 
         .future-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-5px);
             border-color: var(--red-team-red);
             box-shadow: 
                 0 20px 40px var(--shadow-red),
@@ -527,8 +569,8 @@
             font-weight: 500;
             transition: all var(--animation-fast) ease;
             overflow: hidden;
-            /* CHANGE: Standard pointer */
-            cursor: default;
+            cursor: pointer; /* Change to pointer */
+            user-select: none;
         }
 
         .skill-orb::after {
@@ -544,7 +586,7 @@
             border-radius: 50%;
         }
 
-        .skill-orb:hover {
+        .skill-orb:hover, .skill-orb:active {
             color: var(--dark-bg);
             background: var(--red-team-red);
             border-color: var(--red-team-red);
@@ -552,7 +594,7 @@
             box-shadow: 0 0 30px var(--shadow-glow);
         }
 
-        .skill-orb:hover::after {
+        .skill-orb:hover::after, .skill-orb:active::after {
             width: 100%;
             height: 100%;
         }
@@ -560,7 +602,7 @@
         /* Stats Counter */
         .stat-card {
             position: relative;
-            padding: 2rem;
+            padding: 1.5rem;
             background: rgba(15, 0, 0, 0.3);
             border: 1px solid var(--border-primary);
             border-radius: 15px;
@@ -588,7 +630,7 @@
 
         .stat-number {
             font-family: 'Orbitron', monospace;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             background: linear-gradient(45deg, var(--red-team-red), var(--neon-cyan-accent));
             -webkit-background-clip: text;
@@ -598,7 +640,7 @@
         /* Timeline */
         .timeline-item {
             position: relative;
-            padding: 2rem;
+            padding: 1.5rem;
             margin-bottom: 2rem;
             background: linear-gradient(135deg, rgba(15, 0, 0, 0.3), rgba(0, 20, 20, 0.3));
             border-left: 3px solid var(--red-team-red);
@@ -620,7 +662,7 @@
         }
 
         .timeline-item:hover {
-            transform: translateX(10px);
+            transform: translateX(5px);
             background: linear-gradient(135deg, rgba(25, 0, 0, 0.4), rgba(0, 30, 30, 0.4));
             box-shadow: 0 10px 40px var(--shadow-red);
         }
@@ -648,6 +690,61 @@
             animation: fadeInUp 1s ease forwards;
         }
 
+        /* --- MOBILE OVERLAYS --- */
+        .mobile-overlay-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 0, 5, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            overflow-y: auto;
+            padding: 2rem;
+            padding-bottom: 6rem;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .mobile-overlay-screen.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .overlay-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-primary);
+            padding-bottom: 1rem;
+        }
+
+        .overlay-close-btn {
+            background: none;
+            border: 2px solid var(--red-team-red);
+            color: var(--red-team-red);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .overlay-close-btn:hover {
+            background: var(--red-team-red);
+            color: white;
+        }
+
         /* --- SUCCESS MODAL STYLES --- */
         #success-modal {
             position: fixed;
@@ -664,6 +761,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 1rem;
         }
 
         #success-modal.active {
@@ -677,10 +775,10 @@
             border: 2px solid var(--red-team-red);
             box-shadow: 0 0 50px var(--shadow-glow), inset 0 0 30px rgba(255, 51, 102, 0.1);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             transform: scale(0.8) translateY(20px);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
@@ -718,7 +816,7 @@
             border: none;
             color: var(--text-secondary);
             font-size: 2rem;
-            cursor: pointer; /* CHANGE: Standard pointer */
+            cursor: pointer;
             transition: color 0.3s;
             line-height: 1;
             z-index: 10;
@@ -728,19 +826,64 @@
             color: var(--red-team-red);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title { font-size: 3rem; }
-            .cursor, .cursor-follower { display: none; }
-            .modal-content { padding: 2rem; }
+        /* Generic Details Modal (for Skills) */
+        #details-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 0, 5, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 1rem;
         }
+
+        #details-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .details-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 0, 10, 0.95), rgba(0, 10, 10, 0.95));
+            border: 1px solid var(--red-team-red);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 50px var(--shadow-glow);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        #details-modal.active .details-modal-content {
+            transform: translateY(0);
+        }
+        
+        .project-list-item {
+            border-bottom: 1px solid rgba(255, 51, 102, 0.2);
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .project-list-item:last-child { border-bottom: none; }
+
     </style>
 </head>
 <body>
-    <!-- CHANGE: Cursor divs remain in DOM but are hidden via CSS to ensure no JS errors if referenced -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    
     <div class="preloader">
         <div class="loader-text">INITIALIZING...</div>
         <div class="loader-bar-container">
@@ -756,19 +899,40 @@
     
     <nav class="nav-container">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="nav-logo glitch" data-text="NK"></div>
+            <div class="nav-logo glitch" data-text="NK">NK</div>
+            
+            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-6">
-                <a href="#about" class="nav-link">ABOUT</a>
-                <a href="#skills" class="nav-link">SKILLS</a>
-                <a href="#projects" class="nav-link">PROJECTS</a>
-                <a href="#experience" class="nav-link">EXPERIENCE</a>
-                <a href="#contact" class="nav-link">CONTACT</a>
-                <button class="btn-holographic" onclick="window.location.href='mailto:chennupatiniraj@gmail.com'">
+                <a href="#about" class="nav-link" onclick="closeMobileMenu()">ABOUT</a>
+                <a href="#skills" class="nav-link" onclick="closeMobileMenu()">SKILLS</a>
+                <a href="#projects" class="nav-link" onclick="closeMobileMenu()">PROJECTS</a>
+                <a href="#experience" class="nav-link" onclick="closeMobileMenu()">EXPERIENCE</a>
+                <a href="#contact" class="nav-link" onclick="closeMobileMenu()">CONTACT</a>
+                <button class="btn-holographic !w-auto !px-6 !py-2 !text-xs" onclick="window.location.href='mailto:chennupatiniraj@gmail.com'">
                     HIRE ME
                 </button>
             </div>
+
+            <!-- Mobile Hamburger -->
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <h2 class="text-2xl font-bold mb-4" style="font-family: 'Orbitron'; color: var(--red-team-red);">MENU</h2>
+        <a href="#about" class="nav-link text-xl" onclick="toggleMobileMenu()">ABOUT</a>
+        <a href="#skills" class="nav-link text-xl" onclick="toggleMobileMenu()">SKILLS</a>
+        <a href="#projects" class="nav-link text-xl" onclick="toggleMobileMenu()">PROJECTS</a>
+        <a href="#experience" class="nav-link text-xl" onclick="toggleMobileMenu()">EXPERIENCE</a>
+        <a href="#contact" class="nav-link text-xl" onclick="toggleMobileMenu()">CONTACT</a>
+        <button class="btn-holographic mt-4" onclick="window.location.href='mailto:chennupatiniraj@gmail.com'; toggleMobileMenu();">HIRE ME</button>
+    </div>
 
     <main class="relative z-10">
         <section id="hero">
@@ -778,62 +942,58 @@
                 </div>
                 <h1 class="hero-title">NIRAJ KUMAR</h1>
                 <div class="mt-6">
-                    <p class="text-xl md:text-2xl font-light" style="color: var(--text-secondary);">
+                    <p class="text-lg md:text-2xl font-light px-4" style="color: var(--text-secondary);">
                         <span class="glitch" data-text="AI/ML ENGINEER" style="color: var(--red-team-red);">AI/ML ENGINEER</span>
-                        <span class="mx-4" style="color: var(--neon-cyan-accent);">×</span>
+                        <span class="mx-2 md:mx-4" style="color: var(--neon-cyan-accent);">×</span>
                         <span style="color: var(--neon-cyan-accent);">INNOVATION ARCHITECT</span>
                     </p>
                 </div>
-                <div class="mt-12 flex flex-wrap gap-6 justify-center">
-                    <button class="btn-holographic" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
-                        EXPLORE PROJECTS
-                    </button>
-                    <button class="btn-holographic" onclick="window.open('https://github.com/hacktivist211', '_blank')">
-                        VIEW GITHUB
-                    </button>
+                <div class="mt-12 flex flex-wrap gap-4 md:gap-6 justify-center px-4">
+                    <button class="btn-holographic !w-auto md:!w-auto" onclick="openProjectsOverlay()">EXPLORE PROJECTS</button>
+                    <button class="btn-holographic !w-auto md:!w-auto" onclick="window.open('https://github.com/hacktivist211', '_blank')">VIEW GITHUB</button>
                 </div>
                 
-                <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
                     <div class="stat-card">
                         <div class="stat-number" data-target="13">0</div>
-                        <div class="text-sm mt-2" style="color: var(--red-team-red);">AI/ML PROJECTS</div>
+                        <div class="text-xs md:text-sm mt-2" style="color: var(--red-team-red);">AI/ML PROJECTS</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" data-target="3">0</div>
-                        <div class="text-sm mt-2" style="color: var(--neon-cyan-accent);">HACKATHON WINS</div>
+                        <div class="text-xs md:text-sm mt-2" style="color: var(--neon-cyan-accent);">HACKATHON WINS</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" data-target="5">0</div>
-                        <div class="text-sm mt-2" style="color: var(--dark-red-accent);">TECHNOLOGIES</div>
+                        <div class="text-xs md:text-sm mt-2" style="color: var(--dark-red-accent);">TECHNOLOGIES</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" data-target="100">0</div>
-                        <div class="text-sm mt-2" style="color: var(--red-team-red);">% COMMITMENT</div>
+                        <div class="text-xs md:text-sm mt-2" style="color: var(--red-team-red);">% COMMITMENT</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="py-24 px-6">
+        <section id="about" class="py-16 md:py-24 px-4 md:px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
                         <span class="glitch" data-text="ABOUT.EXE">ABOUT.EXE</span>
                     </h2>
-                    <p class="text-xl" style="color: var(--text-secondary);">Architecting the future with artificial intelligence</p>
+                    <p class="text-lg" style="color: var(--text-secondary);">Architecting the future with artificial intelligence</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
                     <div class="future-card">
-                        <h3 class="text-2xl font-bold mb-4" style="color: var(--red-team-red);">// IDENTITY</h3>
-                        <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        <h3 class="text-xl md:text-2xl font-bold mb-4" style="color: var(--red-team-red);">// IDENTITY</h3>
+                        <p class="leading-relaxed text-sm md:text-base" style="color: var(--text-secondary);">
                             Computer Science undergraduate at PES Institute of Technology, specializing in AI/ML with a passion for pushing technological boundaries. 
                             I transform complex problems into elegant solutions using deep learning, NLP, and cutting-edge algorithms.
                         </p>
                     </div>
                     <div class="future-card">
-                        <h3 class="text-2xl font-bold mb-4" style="color: var(--neon-cyan-accent);">// MISSION</h3>
-                        <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        <h3 class="text-xl md:text-2xl font-bold mb-4" style="color: var(--neon-cyan-accent);">// MISSION</h3>
+                        <p class="leading-relaxed text-sm md:text-base" style="color: var(--text-secondary);">
                             Building intelligent systems that bridge the gap between theoretical research and real-world applications. 
                             From AI-powered risk assessment to blockchain-secured IoT, I architect solutions that define tomorrow.
                         </p>
@@ -842,60 +1002,74 @@
             </div>
         </section>
 
-        <section id="skills" class="py-24 px-6">
+        <section id="skills" class="py-16 md:py-24 px-4 md:px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
                         <span class="glitch" data-text="TECH.STACK">TECH.STACK</span>
                     </h2>
-                    <p class="text-xl" style="color: var(--text-secondary);">Mastery across the AI/ML ecosystem</p>
+                    <p class="text-lg" style="color: var(--text-secondary);">Mastery across the AI/ML ecosystem</p>
                 </div>
                 
-                <div class="flex flex-wrap gap-4 justify-center" id="skills-container"></div>
+                <!-- Desktop View: Grid of Skills -->
+                <div class="hidden md:flex flex-wrap gap-4 justify-center" id="skills-container"></div>
+                
+                <!-- Mobile View: Single Button -->
+                <div class="md:hidden flex justify-center">
+                    <button class="btn-holographic text-lg" onclick="openSkillsOverlay()">
+                        LOAD TECH STACK
+                    </button>
+                </div>
             </div>
         </section>
 
-        <section id="projects" class="py-24 px-6">
+        <section id="projects" class="py-16 md:py-24 px-4 md:px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
                         <span class="glitch" data-text="PROJECTS.AI">PROJECTS.AI</span>
                     </h2>
-                    <p class="text-xl" style="color: var(--text-secondary);">Innovation portfolio showcasing AI excellence</p>
+                    <p class="text-lg" style="color: var(--text-secondary);">Innovation portfolio showcasing AI excellence</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-container"></div>
+                <!-- Desktop View: Grid of Projects -->
+                <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="projects-container"></div>
+                
+                <!-- Mobile View: Single Button -->
+                <div class="md:hidden flex justify-center">
+                    <button class="btn-holographic text-lg" onclick="openProjectsOverlay()">
+                        LOAD PROJECTS
+                    </button>
+                </div>
             </div>
         </section>
 
-        <section id="experience" class="py-24 px-6">
+        <section id="experience" class="py-16 md:py-24 px-4 md:px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
                         <span class="glitch" data-text="EXPERIENCE.LOG">EXPERIENCE.LOG</span>
                     </h2>
-                    <p class="text-xl" style="color: var(--text-secondary);">Career milestones and achievements</p>
+                    <p class="text-lg" style="color: var(--text-secondary);">Career milestones and achievements</p>
                 </div>
                 
                 <div class="max-w-3xl mx-auto" id="timeline-container"></div>
             </div>
         </section>
 
-        <section id="contact" class="py-24 px-6">
+        <section id="contact" class="py-16 md:py-24 px-4 md:px-6">
             <div class="max-w-3xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4" style="font-family: 'Orbitron', monospace;">
                         <span class="glitch" data-text="CONNECT.NOW">CONNECT.NOW</span>
                     </h2>
-                    <p class="text-xl" style="color: var(--text-secondary);">Initialize collaboration protocol</p>
+                    <p class="text-lg" style="color: var(--text-secondary);">Initialize collaboration protocol</p>
                 </div>
                 
                 <div class="future-card">
                     <form id="contact-form">
-                        <!-- Standard FormSubmit fields, but we handle via AJAX to avoid redirect -->
                         <input type="hidden" name="_subject" value="New Portfolio Contact!">
                         <input type="hidden" name="_captcha" value="false">
-                        <!-- _next is not needed because we intercept submit -->
                         
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div>
@@ -945,7 +1119,6 @@
             
             <div class="modal-icon-container">
                 <div class="modal-icon-flip">
-                    <!-- FRONT FACE: This contains the checkmark and is revealed on flip -->
                     <div class="modal-icon-front">
                         <svg viewBox="0 0 200 200" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -966,14 +1139,11 @@
                                     </feMerge>
                                 </filter>
                             </defs>
-                            <!-- Coin circle -->
                             <circle cx="100" cy="100" r="90" fill="rgba(15,0,0,0.7)" stroke="var(--red-team-red)" stroke-width="8" filter="url(#neon-glow)"/>
                             <circle cx="100" cy="100" r="80" fill="none" stroke="var(--red-team-red)" stroke-width="4" opacity="0.5"/>
-                            <!-- Checkmark -->
                             <path d="M50 100 L80 130 L150 70" stroke="var(--red-team-red)" stroke-width="20" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#neon-glow)"/>
                         </svg>
                     </div>
-                    <!-- BACK FACE: Empty or placeholder -->
                     <div class="modal-icon-back"></div>
                 </div>
             </div>
@@ -984,96 +1154,128 @@
         </div>
     </div>
 
+    <!-- Generic Details Modal for Skill Interactions -->
+    <div id="details-modal">
+        <div class="details-modal-content">
+            <button class="modal-close-btn" id="close-details-btn">&times;</button>
+            <h3 id="details-title" class="text-2xl font-bold mb-4" style="font-family: 'Orbitron', color: var(--red-team-red);">SKILL DETAILS</h3>
+            <div id="details-body" class="text-left">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Skills Overlay -->
+    <div id="mobile-skills-overlay" class="mobile-overlay-screen">
+        <div class="overlay-header">
+            <h2 class="text-3xl font-bold" style="font-family: 'Orbitron'; color: var(--neon-cyan-accent);">TECH STACK</h2>
+            <button class="overlay-close-btn" onclick="closeSkillsOverlay()">&times;</button>
+        </div>
+        <p class="mb-6" style="color: var(--text-secondary);">Tap a skill to see related projects.</p>
+        <div class="flex flex-wrap gap-4 justify-center" id="mobile-skills-container">
+            <!-- Skills injected here -->
+        </div>
+    </div>
+
+    <!-- Mobile Projects Overlay -->
+    <div id="mobile-projects-overlay" class="mobile-overlay-screen">
+        <div class="overlay-header">
+            <h2 class="text-3xl font-bold" style="font-family: 'Orbitron'; color: var(--red-team-red);">PROJECTS</h2>
+            <button class="overlay-close-btn" onclick="closeProjectsOverlay()">&times;</button>
+        </div>
+        <div id="mobile-projects-container" class="flex flex-col gap-6">
+            <!-- Projects injected here -->
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(TextPlugin);
 
-            // --- UPDATED DATA ---
             const skillsData = [
                 'Python', 'PyTorch', 'TensorFlow', 'JavaScript', 'scikit-learn', 'XGBoost', 'CatBoost', 'NLTK',
                 'Hugging Face', 'LangChain', 'Streamlit',  'SQLite', 'Git', 'Conda',
                 'Deep Learning', 'NLP', 'Time Series', 'Anomaly Detection', 'Ensemble Models', 'Blockchain', 'IoT Security',
                 'Machine Learning', 'Model Development', 'Data Analytics', 'Decision Trees', 'Problem Solving',
-                // New Skills from latest projects
                 'RAG', 'ChromaDB', 'Ollama', 'OCR', 'Agents', 'Vector Search', 'Pydantic',  'Tesseract', 'Self-RAG', 'Automation'
             ];
 
             const projectsData = [
                 {
                     title: 'Advanced Directory Mapper',
-                    description: 'Generates comprehensive tree-like directory structures optimized for LLMs context. Features intelligent file summarization (imports/defs), project type detection, caching, ignore patterns, and token estimation.',
+                    description: 'Generates comprehensive tree-like directory structures optimized for LLMs context.',
                     repo: 'https://github.com/hacktivist211/DirectoryMapper',
                     tech: ['Python', 'CLI', 'LLM Context']
                 },
                 {
                     title: 'PrivateRAG Engine',
-                    description: 'Local-first RAG system for querying private documents. Ingests PDF/DOCX/PPTX using Unstructured, embeds via HuggingFace, stores in ChromaDB, and produces grounded answers via Ollama.',
+                    description: 'Local-first RAG system for querying private documents. Ingests PDF/DOCX/PPTX using Unstructured.',
                     repo: 'https://github.com/hacktivist211/PrivateRAG-Engine',
                     tech: ['LangChain', 'ChromaDB', 'RAG', 'Ollama', 'NLP']
                 },
                 {
                     title: 'AutoBooks',
-                    description: 'Agentic accounting system automating extraction of financial docs using OCR and Self-RAG. Features confidence-based decision making, vector search for ledger classification, and TDS handling.',
+                    description: 'Agentic accounting system automating extraction of financial docs using OCR and Self-RAG.',
                     repo: 'https://github.com/hacktivist211/AutoBooks',
                     tech: ['OCR', 'Self-RAG', 'Agent', 'Automation', 'Pydantic']
                 },
                 {
                     title: 'Risk-Based Proctoring System',
-                    description: 'Real-time ML system using Anomaly Transformer to classify user behavior for online assessments, featuring synthetic data generation and privacy compliance.',
+                    description: 'Real-time ML system using Anomaly Transformer to classify user behavior for online assessments.',
                     repo: 'https://github.com/hacktivist211/RiskPatrol',
                     tech: ['PyTorch', 'Anomaly Detection', 'JavaScript']
                 },
                 {
                     title: 'IronVault: AI & Blockchain for IoT',
-                    description: 'SAP HackFest winning project using an Enhanced Autoencoder with LSTM and blockchain to secure IoT devices against anomalies.',
+                    description: 'SAP HackFest winning project using an Enhanced Autoencoder with LSTM and blockchain.',
                     repo: 'https://github.com/hacktivist211/IronVault',
                     tech: ['PyTorch', 'LSTM', 'Blockchain', 'IoT']
                 },
                 {
                     title: 'Credit Risk Management Model',
-                    description: 'Ensemble ML pipeline with CatBoost and XGBoost to predict borrower default, using over 100 synthetic features for high recall.',
+                    description: 'Ensemble ML pipeline with CatBoost and XGBoost to predict borrower default.',
                     repo: 'https://github.com/hacktivist211/Credit-Risk-Management-Model',
                     tech: ['CatBoost', 'XGBoost', 'Ensemble Models']
                 },
                 {
                     title: 'Brainstorming Rig',
-                    description: 'A Streamlit web app using Qwen3/Mistral LLMs for interactive brainstorming, with file upload support and persistent chat history.',
+                    description: 'A Streamlit web app using Qwen3/Mistral LLMs for interactive brainstorming.',
                     repo: 'https://github.com/hacktivist211/brainstorming-rig',
                     tech: ['Streamlit', 'LLM', 'SQLite', 'NLP']
                 },
                 {
                     title: 'TTS LLM Agent',
-                    description: 'A JARVIS-inspired conversational AI with Text-to-Speech, Speech-to-Text, and LLM capabilities for interactive voice responses.',
+                    description: 'A JARVIS-inspired conversational AI with Text-to-Speech, Speech-to-Text, and LLM capabilities.',
                     repo: 'https://github.com/hacktivist211/tts-llm-agent',
                     tech: ['TTS', 'STT', 'LLM', 'Ollama']
                 },
                 {
                     title: 'MarketMomentum Stock Prediction',
-                    description: 'XGBoost model for stock price forecasting using Kaggle datasets, evaluated with RMSE/MAE and visual comparisons.',
+                    description: 'XGBoost model for stock price forecasting using Kaggle datasets.',
                     repo: 'https://github.com/hacktivist211/MarketMomentum',
                     tech: ['XGBoost', 'Time Series', 'Scikit-learn']
                 },
                 {
                     title: 'BeatHarvest',
-                    description: 'High-quality music downloader that fetches tracks from Spotify and downloads the best matching audio using yt-dlp.',
+                    description: 'High-quality music downloader that fetches tracks from Spotify and downloads audio.',
                     repo: 'https://github.com/hacktivist211/BeatHarvest',
                     tech: ['Python', 'Spotify API', 'yt-dlp', 'FFmpeg']
                 },
                 {
                     title: 'Smart Memory LLM',
-                    description: 'A J.A.R.V.I.S.-inspired AI assistant with long-term memory, user profile storage, and dynamic web search capabilities.',
+                    description: 'A J.A.R.V.I.S.-inspired AI assistant with long-term memory and dynamic web search.',
                     repo: 'https://github.com/hacktivist211/Smart-Memory-LLM',
                     tech: ['Python', 'LLM', 'SQLite', 'LangChain']
                 },
                 {
                     title: 'VAE for Anomaly Detection',
-                    description: 'Implementation of a Variational Autoencoder (VAE) in PyTorch for anomaly detection in tabular datasets.',
+                    description: 'Implementation of a Variational Autoencoder (VAE) in PyTorch for anomaly detection.',
                     repo: 'https://github.com/hacktivist211/VAE-Anomaly-Detection',
                     tech: ['PyTorch', 'VAE', 'Pandas', 'scikit-learn']
                 },
                 {
                     title: 'YT-Harvester',
-                    description: 'A tool for downloading high-quality videos and audio from YouTube, supporting playlists and multiple formats like 4K video and FLAC audio.',
+                    description: 'A tool for downloading high-quality videos and audio from YouTube.',
                     repo: 'https://github.com/hacktivist211/YT-Harvester',
                     tech: ['Python', 'yt-dlp', 'FFmpeg']
                 }
@@ -1083,32 +1285,50 @@
                 {
                     title: 'Machine Learning Intern',
                     subtitle: 'Family Business',
-                    description: 'Optimized computational resources through code parallelization and cloud platforms, streamlined data preprocessing to accelerate model training, and reduced model overfitting by applying regularization.'
+                    description: 'Optimized computational resources through code parallelization and cloud platforms.'
                 },
                 {
                     title: 'SAP HackFest: IronVault ',
                     subtitle: 'Achievement',
-                    description: 'Developed an innovative AI and Blockchain solution to secure IoT devices, winning recognition at the hackathon.'
+                    description: 'Developed an innovative AI and Blockchain solution to secure IoT devices.'
                 },
                 {
                     title: 'IIT Kharagpur Hackathon: Top 10',
                     subtitle: 'Achievement',
-                    description: 'Secured top 10th position out of 886 teams by prototyping an AI-powered app to streamline bureaucratic tasks.'
+                    description: 'Secured top 10th position out of 886 teams by prototyping an AI-powered app.'
                 },
                 {
                     title: 'Research Presentation @ IISc Bangalore',
                     subtitle: 'Achievement',
-                    description: 'Presented a CO₂-to-methane conversion device prototype, showcasing research in sustainable technologies.'
+                    description: 'Presented a CO₂-to-methane conversion device prototype.'
                 }
             ];
 
-            // --- DATA INJECTION ---
-            const skillsContainer = document.getElementById('skills-container');
-            skillsContainer.innerHTML = skillsData.map(skill => `<div class="skill-orb">${skill}</div>`).join('');
+            // --- RENDER FUNCTIONS ---
+            const createSkillOrb = (skill) => {
+                const orb = document.createElement('div');
+                orb.className = 'skill-orb';
+                orb.textContent = skill;
+                orb.addEventListener('click', () => openSkillDetails(skill));
+                return orb;
+            };
 
+            // Desktop Skills Render
+            const skillsContainer = document.getElementById('skills-container');
+            skillsData.forEach(skill => {
+                skillsContainer.appendChild(createSkillOrb(skill));
+            });
+
+            // Mobile Skills Render
+            const mobileSkillsContainer = document.getElementById('mobile-skills-container');
+            skillsData.forEach(skill => {
+                mobileSkillsContainer.appendChild(createSkillOrb(skill));
+            });
+
+            // Desktop Projects Render
             const projectsContainer = document.getElementById('projects-container');
             projectsContainer.innerHTML = projectsData.map(project => `
-                <div class="future-card flex flex-col">
+                <div class="future-card">
                     <div class="flex-grow">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--red-team-red);">${project.title}</h3>
                         <p class="text-sm mb-4" style="color: var(--text-secondary);">${project.description}</p>
@@ -1122,23 +1342,108 @@
                 </div>
             `).join('');
 
-            const timelineContainer = document.getElementById('timeline-container');
-            timelineContainer.innerHTML = timelineData.map(item => `
-                <div class="timeline-item">
-                    <h3 class="text-xl font-bold" style="color: var(--red-team-red);">${item.title}</h3>
-                    <div class="text-sm font-semibold mb-2" style="color: var(--neon-cyan-accent);">${item.subtitle}</div>
-                    <p class="text-sm" style="color: var(--text-secondary);">${item.description}</p>
+            // Mobile Projects Render
+            const mobileProjectsContainer = document.getElementById('mobile-projects-container');
+            mobileProjectsContainer.innerHTML = projectsData.map(project => `
+                <div class="future-card">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--red-team-red);">${project.title}</h3>
+                    <p class="text-sm mb-4" style="color: var(--text-secondary);">${project.description}</p>
+                    <div class="flex flex-wrap mb-4">
+                        ${project.tech.map(t => `<span class="text-xs font-semibold mr-2 mb-2 px-2 py-1 rounded-full" style="background: rgba(255,51,102,0.1); color: var(--red-team-red);">${t}</span>`).join('')}
+                    </div>
+                    <a href="${project.repo}" target="_blank" class="btn-holographic text-xs !py-2">OPEN REPOSITORY</a>
                 </div>
             `).join('');
 
-            // --- UPDATED PRELOADER LOGIC ---
+            // Timeline Render
+            const timelineContainer = document.getElementById('timeline-container');
+            timelineContainer.innerHTML = timelineData.map(item => `
+                <div class="timeline-item">
+                    <h3 class="text-lg md:text-xl font-bold" style="color: var(--red-team-red);">${item.title}</h3>
+                    <div class="text-xs md:text-sm font-semibold mb-2" style="color: var(--neon-cyan-accent);">${item.subtitle}</div>
+                    <p class="text-xs md:text-sm" style="color: var(--text-secondary);">${item.description}</p>
+                </div>
+            `).join('');
+
+            // --- INTERACTION LOGIC ---
+
+            // Mobile Menu
+            window.toggleMobileMenu = function() {
+                const menu = document.getElementById('mobile-menu');
+                const overlay = document.getElementById('mobile-menu-overlay');
+                const hamburger = document.querySelector('.hamburger');
+                menu.classList.toggle('open');
+                overlay.classList.toggle('open');
+                hamburger.classList.toggle('active');
+            }
+
+            window.closeMobileMenu = function() {
+                const menu = document.getElementById('mobile-menu');
+                const overlay = document.getElementById('mobile-menu-overlay');
+                const hamburger = document.querySelector('.hamburger');
+                menu.classList.remove('open');
+                overlay.classList.remove('open');
+                hamburger.classList.remove('active');
+            }
+
+            // Mobile Overlays
+            window.openSkillsOverlay = function() {
+                document.getElementById('mobile-skills-overlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            window.closeSkillsOverlay = function() {
+                document.getElementById('mobile-skills-overlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            window.openProjectsOverlay = function() {
+                document.getElementById('mobile-projects-overlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            window.closeProjectsOverlay = function() {
+                document.getElementById('mobile-projects-overlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Skill Detail Modal Logic
+            window.openSkillDetails = function(skillName) {
+                const modal = document.getElementById('details-modal');
+                const title = document.getElementById('details-title');
+                const body = document.getElementById('details-body');
+
+                // Find projects
+                const matchingProjects = projectsData.filter(p => p.tech.includes(skillName));
+
+                title.textContent = skillName + " PROJECTS";
+                
+                if (matchingProjects.length > 0) {
+                    body.innerHTML = matchingProjects.map(p => `
+                        <div class="project-list-item">
+                            <div>
+                                <div class="font-bold text-white">${p.title}</div>
+                                <div class="text-xs text-gray-400 mt-1">${p.tech.join(', ')}</div>
+                            </div>
+                            <a href="${p.repo}" target="_blank" class="text-sm font-bold text-red-500 hover:text-cyan-400">VIEW &rarr;</a>
+                        </div>
+                    `).join('');
+                } else {
+                    body.innerHTML = `<p class="text-center text-gray-400">No specific projects found for this exact skill, but it's used in various integrations.</p>`;
+                }
+
+                modal.classList.add('active');
+            }
+
+            document.getElementById('close-details-btn').addEventListener('click', () => {
+                document.getElementById('details-modal').classList.remove('active');
+            });
+
+            // --- PRELOADER ---
             const preloader = document.querySelector('.preloader');
             const loaderText = document.querySelector('.loader-text');
             const loaderBar = document.querySelector('.loader-bar');
 
             const tl = gsap.timeline();
 
-            tl.to({}, { duration: 2.0 });
+            tl.to({}, { duration: 1.5 });
 
             tl.to(loaderText, {
                 text: "LOADING MODULES...",
@@ -1150,7 +1455,7 @@
                 duration: 1.5,
                 ease: "power2.inOut"
             }, "<")
-            .to({}, { duration: 1.5 });
+            .to({}, { duration: 1.0 });
 
             tl.to(loaderText, {
                 text: "VERIFYING INTEGRITY...",
@@ -1162,14 +1467,14 @@
                 duration: 1.0,
                 ease: "power1.out"
             }, "<")
-            .to({}, { duration: 1.0 });
+            .to({}, { duration: 0.8 });
 
             tl.to(loaderText, {
                 text: "SYSTEM ONLINE",
                 duration: 0.8,
                 ease: "none"
             })
-            .to({}, { duration: 1.0 })
+            .to({}, { duration: 0.5 })
             .to(preloader, {
                 opacity: 0,
                 duration: 1.5,
@@ -1179,39 +1484,18 @@
                 }
             });
 
-
-            // --- CHANGE: REMOVED CUSTOM CURSOR LOGIC ---
-            // The cursor is now handled by native OS CSS (cursor: default/pointer)
-            // No JS tracking needed.
-
-
-            // --- NAVBAR SCROLL ---
+            // --- SCROLL & PARALLAX ---
             const nav = document.querySelector('.nav-container');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
-            });
-
-            // --- ENHANCED PARALLAX EFFECT ---
-            const parallaxBg = document.getElementById('parallax-bg');
-            const parallaxBg2 = document.getElementById('parallax-bg-2');
-            
-            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+                
                 const scrollPosition = window.scrollY;
-                parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-                parallaxBg2.style.transform = `translateY(${scrollPosition * 0.7}px)`;
-                
-                const horizontalMovement = Math.sin(scrollPosition * 0.002) * 20;
-                const horizontalMovement2 = Math.cos(scrollPosition * 0.0015) * 15;
-                
-                parallaxBg.style.transform += ` translateX(${horizontalMovement}px)`;
-                parallaxBg2.style.transform += ` translateX(${-horizontalMovement2}px)`;
+                document.getElementById('parallax-bg').style.transform = `translateY(${scrollPosition * 0.5}px)`;
+                document.getElementById('parallax-bg-2').style.transform = `translateY(${scrollPosition * 0.7}px)`;
             });
 
-            // --- INTERSECTION OBSERVER ---
+            // --- ANIMATION OBSERVER ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1233,11 +1517,9 @@
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.future-card, .skill-orb, .timeline-item, .stat-number, .stat-card').forEach(el => {
-                observer.observe(el);
-            });
+            document.querySelectorAll('.future-card, .skill-orb, .timeline-item, .stat-number, .stat-card').forEach(el => observer.observe(el));
 
-            // --- CONTACT FORM HANDLING & MODAL ---
+            // --- FORM HANDLING ---
             const form = document.getElementById('contact-form');
             const modal = document.getElementById('success-modal');
             const closeModalBtn = document.getElementById('close-modal-btn');
@@ -1266,7 +1548,7 @@
                     submitBtn.disabled = false;
                 })
                 .catch(error => {
-                    console.log("Form submitted (simulated success for demo):", error);
+                    console.log("Simulated success for demo:", error);
                     modal.classList.add('active');
                     form.reset();
                     submitBtn.innerText = originalText;
@@ -1274,18 +1556,9 @@
                 });
             });
 
-            closeModalBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
-            });
+            closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
 
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
-
-
-            // --- THREE.JS PARTICLE BACKGROUND ---
+            // --- THREE.JS ---
             let scene, camera, renderer, particles;
             const canvas = document.getElementById('particles-canvas');
             
