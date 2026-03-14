@@ -48,7 +48,7 @@ const PROJECT_DATA = [
     num: "06",
     title: `Memora &mdash; Alzheimer&#39;s AR Assistant`,
     tags: ["ArcFace", "ECAPA-TDNN", "RAG", "Whisper", "Coqui TTS", "ChromaDB"],
-    repo: "https://github.com/hacktivist211/Memora-AR-Based-Cognitive-Assistive-Platform",
+    repo: "https://github.com/hacktivist211/Alzheimers-AR-Project",
     overview: "A clinical-grade multimodal memory assistant for early-stage Alzheimer's patients. Combines biometric identity fusion, RAG-based memory recall, and voice interaction in a patient-safe pipeline.",
     highlights: ["ArcFace (face) + ECAPA-TDNN (voice) fusion produces a stable biometric user_id across sessions", "ChromaDB vector store holds the patient's personal memory corpus — relationships, events, routines", "Hallucination-free by design: Qwen LLM responds only from retrieved context, never invents facts", "Calm, stable TTS output via Coqui — response tone is explicitly optimised for Alzheimer's safety"],
     what: "A memory prosthetic for Alzheimer's patients. Recognises who they are and helps them remember who you are."
@@ -84,7 +84,7 @@ const PROJECT_DATA = [
     num: "10",
     title: `Smart Memory LLM`,
     tags: ["LLM", "SQLite", "LangChain", "Python"],
-    repo: "https://github.com/hacktivist211/Smart-Memory-LLM",
+    repo: "https://github.com/hacktivist211/Smart_Memory_LLM",
     overview: "A JARVIS-inspired AI assistant with persistent long-term memory. Conversation context, user preferences, and factual knowledge survive session restarts via a local SQLite store.",
     highlights: ["SQLite backend stores conversation history with semantic indexing for relevant retrieval", "Dynamic web search integration — the assistant fetches real-time data when its memory is insufficient", "LangChain orchestrates memory retrieval, web augmentation, and LLM response generation", "Session-persistent context means the assistant remembers previous conversations across restarts"],
     what: "An AI assistant that actually remembers you. No re-explaining context on every session start."
@@ -102,7 +102,7 @@ const PROJECT_DATA = [
     num: "12",
     title: `VAE Anomaly Detection`,
     tags: ["PyTorch", "VAE", "Pandas", "scikit-learn"],
-    repo: "https://github.com/hacktivist211/VAE-Anomaly-Detection",
+    repo: "https://github.com/hacktivist211/vae-anomaly-detector",
     overview: "Unsupervised anomaly detection using a Variational Autoencoder trained on tabular data. Anomalies are flagged based on reconstruction error exceeding a calibrated threshold.",
     highlights: ["VAE learns a compressed latent representation of normal data distribution", "Reconstruction error at inference time quantifies how anomalous each sample is", "Threshold calibrated on validation set using precision-recall tradeoff analysis", "Entirely unsupervised — no anomaly labels needed during training"],
     what: "Detects anomalies without labelled training data. Learns what normal looks like, then flags everything else."
@@ -147,7 +147,7 @@ const PROJECT_DATA = [
     num: "17",
     title: `TTS LLM Agent`,
     tags: ["TTS", "STT", "LLM", "Ollama", "Python"],
-    repo: "https://github.com/hacktivist211/tts-llm-agent",
+    repo: "https://github.com/hacktivist211/Agent-Backup",
     overview: "JARVIS-inspired full voice pipeline combining TTS, STT, and Ollama local LLM inference. Continuous listening mode with natural conversation flow and wake detection.",
     highlights: ["Continuous microphone listening with silence detection to segment speech turns", "Ollama handles local LLM inference — model swappable without code changes", "TTS response plays back immediately after generation with no perceptible latency", "Fallback to text input mode if audio hardware is unavailable"],
     what: "A full voice-to-voice AI pipeline running entirely on local hardware."
