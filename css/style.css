@@ -2201,9 +2201,9 @@ footer {
 .project-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 3, 10, 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(4, 3, 10, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 50000;
   display: flex;
   align-items: stretch;
@@ -2985,4 +2985,105 @@ footer {
   .project-modal-footer {
     padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
   }
+}
+
+
+/* ============================================================
+   AUTO TIME-BASED THEMES
+   Applied via JS class on <html>: .theme-day | .theme-golden | .theme-night (default)
+   Night = default :root (already defined above)
+   ============================================================ */
+
+/* DAY THEME — 8:00 to 16:59 */
+html.theme-day {
+  --bg: #f4f1ec;
+  --bg-2: #ede9e2;
+  --surface: rgba(0, 0, 0, 0.04);
+  --surface-hover: rgba(0, 0, 0, 0.07);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(200, 60, 40, 0.35);
+  --red: #c0392b;
+  --red-bright: #e04030;
+  --red-dim: rgba(192, 57, 43, 0.1);
+  --cyan: #1a7f6e;
+  --cyan-dim: rgba(26, 127, 110, 0.12);
+  --white: #1a1714;
+  --muted: rgba(26, 23, 20, 0.5);
+  --dimmer: rgba(26, 23, 20, 0.28);
+}
+
+/* GOLDEN HOUR THEME — 17:00 to 19:59 */
+html.theme-golden {
+  --bg: #110d08;
+  --bg-2: #160f08;
+  --surface: rgba(255, 160, 60, 0.04);
+  --surface-hover: rgba(255, 160, 60, 0.08);
+  --border: rgba(255, 160, 60, 0.1);
+  --border-accent: rgba(255, 130, 40, 0.4);
+  --red: #e8722a;
+  --red-bright: #ff9045;
+  --red-dim: rgba(232, 114, 42, 0.15);
+  --cyan: #f5c842;
+  --cyan-dim: rgba(245, 200, 66, 0.12);
+  --white: #fdf0de;
+  --muted: rgba(253, 240, 222, 0.5);
+  --dimmer: rgba(253, 240, 222, 0.22);
+}
+
+/* NIGHT THEME — 20:00 to 07:59 — same as original :root, no overrides needed */
+
+/* Smooth transition when theme changes */
+html {
+  transition:
+    background-color 1.2s ease,
+    color 1.2s ease;
+}
+
+body,
+nav,
+.preloader,
+.about-card,
+.manifesto-point,
+.slide-card,
+.metric-cell,
+.skills-category,
+.domain-cell,
+.project-modal-panel,
+.modal-box,
+.ticker-bar,
+.metrics-strip,
+.split-pane:first-child {
+  transition:
+    background 1.2s ease,
+    border-color 1.2s ease,
+    color 1.2s ease;
+}
+
+/* Day theme: fix scrollbar to match light bg */
+html.theme-day ::-webkit-scrollbar-track { background: var(--bg); }
+html.theme-day ::-webkit-scrollbar-thumb { background: var(--red); }
+
+/* Day theme: hero outline text needs darker stroke */
+html.theme-day .hero-name-line:nth-child(2) {
+  -webkit-text-stroke: 1px rgba(26, 23, 20, 0.18);
+}
+
+/* Day theme: manifesto bg watermark */
+html.theme-day .manifesto-bg-text {
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Day theme: contact outline text */
+html.theme-day .contact-heading span {
+  -webkit-text-stroke: 1px rgba(26, 23, 20, 0.15);
+}
+
+/* Day theme: about card outline number */
+html.theme-day .about-card-num {
+  -webkit-text-stroke: 1px rgba(26, 23, 20, 0.12);
+}
+
+/* Golden: hero grid subtler */
+html.theme-golden .hero-grid {
+  opacity: 0.6;
 }
