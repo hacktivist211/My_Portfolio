@@ -284,3 +284,30 @@ document.addEventListener('keydown', e => {
     if (sm) sm.classList.remove('active');
   }
 });
+
+/* ============================================================
+   AUTO TIME-BASED THEME
+   Night  : 20:00 – 07:59  (default dark — no class needed)
+   Day    : 08:00 – 16:59  (.theme-day)
+   Golden : 17:00 – 19:59  (.theme-golden)
+   ============================================================ */
+
+function applyTimeTheme() {
+  const hour = new Date().getHours();
+  const html  = document.documentElement;
+
+  html.classList.remove('theme-day', 'theme-golden');
+
+  if (hour >= 8 && hour < 17) {
+    html.classList.add('theme-day');
+  } else if (hour >= 17 && hour < 20) {
+    html.classList.add('theme-golden');
+  }
+  // 20:00–07:59 → no class → night theme (original :root vars)
+}
+
+// Apply immediately on load — before paint if possible
+applyTimeTheme();
+
+// Re-check every minute so theme flips automatically at the boundary
+setInterval(applyTimeTheme, 60 * 1000);
