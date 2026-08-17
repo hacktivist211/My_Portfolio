@@ -1,0 +1,166 @@
+@import "@fontsource/archivo/400.css";
+@import "@fontsource/archivo/500.css";
+@import "@fontsource/archivo/600.css";
+@import "@fontsource/archivo/800.css";
+@import "@fontsource/archivo/900.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 4% 4%;
+    --foreground: 30 8% 90%;
+    --card: 240 4% 7%;
+    --card-foreground: 30 8% 90%;
+    --popover: 240 4% 6%;
+    --popover-foreground: 30 8% 90%;
+    --primary: 350 82% 38%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4% 12%;
+    --secondary-foreground: 30 8% 90%;
+    --muted: 240 4% 14%;
+    --muted-foreground: 30 4% 55%;
+    --accent: 350 82% 38%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 350 82% 38%;
+    --radius: 0.125rem;
+
+    /* World palette */
+    --ink: #0a0a0c;
+    --ink-2: #101014;
+    --ink-3: #16161c;
+    --bone: #e8e4dd;
+    --ash: #8f8b85;
+    --blood: #b3122e;
+    --blood-dim: #7a0d20;
+    --cyan-dim: #6fb3b8;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    background: var(--ink);
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply text-foreground;
+    background: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    /* keep the normal cursor — always */
+    cursor: auto !important;
+  }
+
+  ::selection {
+    background: var(--blood);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26262e;
+    border: 2px solid var(--ink);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--blood-dim);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .font-black-ops {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+  }
+  .font-archive {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  .text-blood {
+    color: var(--blood);
+  }
+  .text-bone {
+    color: var(--bone);
+  }
+  .text-ash {
+    color: var(--ash);
+  }
+  .bg-ink {
+    background-color: var(--ink);
+  }
+  .bg-ink-2 {
+    background-color: var(--ink-2);
+  }
+  .bg-blood {
+    background-color: var(--blood);
+  }
+  .rule-line {
+    border-color: rgba(232, 228, 221, 0.09);
+  }
+
+  /* film grain — a single fixed layer, pointer-events none, cheap */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: -100%;
+    z-index: 90;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    opacity: 0.05;
+    animation: grain-shift 0.9s steps(3) infinite;
+  }
+
+  @keyframes grain-shift {
+    0% { transform: translate3d(0, 0, 0); }
+    33% { transform: translate3d(-2%, 1.4%, 0); }
+    66% { transform: translate3d(1.6%, -1%, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+  }
+
+  /* smoked glass panel */
+  .smoked {
+    background: rgba(14, 14, 18, 0.55);
+    backdrop-filter: blur(14px) saturate(0.9);
+    -webkit-backdrop-filter: blur(14px) saturate(0.9);
+    border: 1px solid rgba(232, 228, 221, 0.08);
+  }
+
+  /* vignette for image scenes */
+  .scene-vignette {
+    background:
+      linear-gradient(to bottom, rgba(10,10,12,0.72) 0%, rgba(10,10,12,0.05) 26%, rgba(10,10,12,0.02) 55%, rgba(10,10,12,0.88) 100%),
+      radial-gradient(ellipse at center, transparent 42%, rgba(10,10,12,0.55) 100%);
+  }
+
+  .will-cam {
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grain::after { animation: none; }
+  }
+}
