@@ -188,6 +188,16 @@ a{color:inherit}
 @media(max-width:1180px){.work__grid{grid-template-columns:minmax(0,max-content)}}
 @media(max-width:900px){.work__body{grid-template-columns:minmax(0,1fr);gap:32px}.work__index{position:sticky;top:57px;z-index:20;margin:0 -16px;padding:8px 16px;background:rgba(7,9,13,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}.work__index ol{display:flex;gap:4px;overflow-x:auto;border-top:0;scrollbar-width:none}.work__index ol::-webkit-scrollbar{display:none}.work__index-btn{border:1px solid var(--border);border-radius:999px;padding:8px 14px;white-space:nowrap}.work__index-btn[data-active]{padding-left:14px;border-color:var(--accent)}.work__index-note{display:none}.work__grid{justify-content:center}}
 @media(max-width:720px){.fcard{width:min(400px,calc(100vw - 32px));height:560px}}
+.arch-banner{display:block;margin:72px 0 0;padding:36px 8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-decoration:none;color:var(--foreground)}
+.arch-banner__top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+.arch-banner__eyebrow{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.28em;color:var(--muted)}
+.arch-banner__count{font-family:var(--font-mono);font-size:var(--text-sm);letter-spacing:.2em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:6px 16px;white-space:nowrap}
+.arch-banner__title{display:block;font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,6vw,4.2rem);letter-spacing:-.02em;line-height:1.02}
+.arch-banner__arrow{display:inline-block;color:var(--accent);transition:transform 300ms var(--ease-out)}
+.arch-banner__sub{display:block;margin-top:12px;color:var(--muted);max-width:62ch}
+.arch-banner:hover .arch-banner__arrow{transform:translateX(14px)}
+.arch-banner:hover .arch-banner__title{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:10px;text-decoration-thickness:2px}
+@media(max-width:768px){.arch-banner{margin-top:56px;padding:28px 4px}}
 /* ---------- Experience / Capabilities / Proof ---------- */
 .exp__list,.cap__list,.proof__list{border-top:1px solid var(--border)}
 .exp__list{border-top:1px solid var(--border)}
@@ -303,7 +313,11 @@ a{color:inherit}
     <nav class="work__index" aria-label="Project index"><ol id="work-index"></ol><p class="work__index-note">Click a card to flip it. Drag to throw it.</p></nav>
     <div class="work__grid" id="work-grid"></div>
   </div>
-  <p style="margin:48px 0 0"><a class="hero__secondary" href="archive.html">COMPLETE ARCHIVE · 40 PROJECTS <span>→</span></a></p>
+  <a class="arch-banner reveal-scroll" href="archive.html" aria-label="Open the complete archive of all 40 projects">
+    <span class="arch-banner__top"><span class="arch-banner__eyebrow">COMPLETE ARCHIVE</span><span class="arch-banner__count">40 PROJECTS</span></span>
+    <span class="arch-banner__title">Every repository, indexed <span class="arch-banner__arrow" aria-hidden="true">→</span></span>
+    <span class="arch-banner__sub">Systems · Models · Tools · Labs · References — search it, filter it, open anything.</span>
+  </a>
 </div></section>
 <section class="section" id="experience" aria-labelledby="experience-title"><div class="section__inner">
   <div class="section-head"><p class="section-head__eyebrow reveal-scroll"><span class="section-head__index">02</span><span class="section-head__rule"></span>ENGINEERING EXPERIENCE</p>
