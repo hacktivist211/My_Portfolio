@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Complete project archive — Niraj Kumar Chennupati. Every repository, indexed." />
+<meta name="theme-color" content="#07090d" />
+<title>Complete Archive — Niraj Kumar Chennupati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--background:#07090d;--foreground:#edeef0;--muted:#9aa3b2;--surface:rgba(255,255,255,.04);--border:rgba(255,255,255,.1);--accent:#d8c193;
+--radius-md:14px;--font-display:'Space Grotesk',system-ui,sans-serif;--font-body:'Inter',system-ui,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
+--text-xs:.72rem;--text-sm:.85rem;--text-md:1rem;--ease-out:cubic-bezier(.23,1,.32,1);color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--background);color:var(--foreground);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:var(--background)}
+a{color:inherit}:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.nav{position:sticky;top:0;z-index:50;background:rgba(7,9,13,.85);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:12px 24px}
+.nav__brand{font-family:var(--font-mono);font-size:var(--text-sm);letter-spacing:.14em;text-decoration:none}
+.nav__brand span{color:var(--accent)}
+.nav__back{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.14em;color:var(--muted);text-decoration:none}
+.nav__back:hover{color:var(--foreground)}
+.wrap{max-width:1100px;margin:0 auto;padding:64px 24px 96px}
+.eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.28em;color:var(--muted)}
+.eyebrow i{color:var(--accent);font-style:normal}.eyebrow b{display:inline-block;width:44px;height:1px;background:var(--accent);font-weight:400}
+h1{margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,4vw,2.8rem);letter-spacing:-.02em;line-height:1.05}
+.count{margin:12px 0 0;font-family:var(--font-mono);font-size:var(--text-sm);letter-spacing:.2em;color:var(--accent)}
+.lede{margin:16px 0 0;color:var(--muted);max-width:64ch}
+.controls{margin-top:32px;display:flex;flex-direction:column;gap:16px}
+.search{display:flex;align-items:center;gap:12px;max-width:520px;padding:12px 16px;border:1px solid var(--border);border-radius:14px;background:var(--surface);font-family:var(--font-mono);color:var(--accent)}
+.search:focus-within{border-color:var(--accent)}
+.search input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--foreground);font:inherit;font-size:var(--text-sm)}
+.search input::placeholder{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:baseline;gap:8px;padding:7px 14px;border:1px solid var(--border);border-radius:999px;background:none;color:var(--muted);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.1em;cursor:pointer}
+.chip:hover{color:var(--foreground);border-color:var(--accent)}
+.chip[data-active]{color:var(--background);background:var(--foreground);border-color:var(--foreground)}
+.chip n{font-size:.62rem;opacity:.65}
+.showing{margin:24px 0 0;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.22em;color:var(--muted)}
+.empty{margin:32px 0 0;padding:32px 16px;border:1px dashed var(--border);border-radius:14px;color:var(--muted);text-align:center}
+.empty em{color:var(--accent);font-style:normal}
+ol.list{margin:16px 0 0;padding:0;list-style:none;border-top:1px solid var(--border)}
+.row{border-bottom:1px solid var(--border)}
+.head{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,280px) 28px;gap:8px 16px;align-items:baseline;width:100%;padding:12px 4px;background:none;border:0;cursor:pointer;text-align:left;color:var(--foreground);font:inherit}
+.head:hover{background:var(--surface)}
+.num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--accent)}
+.main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.name{font-family:var(--font-display);font-weight:600;font-size:var(--text-md);display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px}
+.flag{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.2em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.desc{font-size:var(--text-sm);color:var(--muted);line-height:1.55}
+.row[data-open] .desc{color:var(--foreground)}
+.meta{display:flex;flex-direction:column;gap:2px;align-items:flex-end;text-align:right;min-width:0}
+.cat{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.2em;color:var(--accent);white-space:nowrap}
+.tech{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.glyph{font-family:var(--font-mono);color:var(--accent);text-align:center}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows 380ms var(--ease-out)}
+.row[data-open] .panel{grid-template-rows:1fr}
+.panel-inner{overflow:hidden;min-height:0;opacity:0;transition:opacity 260ms ease}
+.row[data-open] .panel-inner{opacity:1}
+.detail{padding:0 0 24px calc(44px + 16px);max-width:760px}
+.detail h4{margin:0 0 4px;font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.detail p{margin:0 0 16px;font-size:.9rem;line-height:1.65;opacity:.9}
+.detail ul{margin:0 0 16px;padding-left:1.1em;font-size:.86rem;line-height:1.65;opacity:.9}
+.detail li{margin-bottom:.35em}.detail li::marker{color:var(--accent)}
+.outcome{border-left:2px solid var(--accent);padding-left:12px}
+.stack{margin:8px 0 12px;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--muted)}
+.repo{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--foreground);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;overflow-wrap:anywhere}
+.repo:hover{color:var(--accent)}
+.launch{margin:0 0 12px;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.14em;color:var(--accent)}
+.flink{margin:0 0 16px;background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.22em;color:var(--accent)}
+.flink:hover{text-decoration:underline;text-underline-offset:4px}
+.footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.14em;color:var(--muted)}
+@media(max-width:900px){.head{grid-template-columns:36px minmax(0,1fr) 28px;grid-template-areas:'num main glyph' 'num meta glyph'}.num{grid-area:num}.main{grid-area:main}.meta{grid-area:meta;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;gap:8px 12px}.tech{white-space:normal}.glyph{grid-area:glyph;align-self:start}.detail{padding-left:calc(36px + 8px)}}
+@media(max-width:520px){.wrap{padding:48px 16px 64px}.chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap}.detail{padding-left:0}.head{grid-template-columns:minmax(0,1fr) 28px;grid-template-areas:'main glyph' 'meta glyph'}.num{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav__inner">
+  <a class="nav__brand" href="index.html">NIRAJ <span>/</span> ARCHIVE</a>
+  <a class="nav__back" href="index.html">← BACK TO PORTFOLIO</a>
+</div></header>
+<div class="wrap">
+  <p class="eyebrow"><i>01 · ARCHIVE</i><b></b>COMPLETE ARCHIVE</p>
+  <h1>All work, indexed.</h1>
+  <p class="count" id="count"></p>
+  <p class="lede">The six case studies on the main page are the shortlist. This is everything else the corpus documents: systems, models, tools, labs, and references. Each discoverable, each weighted by what its README actually supports.</p>
+  <div class="controls">
+    <label class="search" for="q"><span>/</span><input id="q" type="search" placeholder="Search name, technology, domain…" autocomplete="off" spellcheck="false" /></label>
+    <div class="chips" role="group" aria-label="Filter by domain" id="chips"></div>
+  </div>
+  <p class="showing" id="showing" aria-live="polite"></p>
+  <ol class="list" id="list"></ol>
+  <p class="empty" id="empty" hidden>Nothing matches. Try a technology: <em>opencv</em>, <em>rag</em>, <em>chromadb</em>.</p>
+  <footer class="footer"><p>NIRAJ KUMAR CHENNUPATI · COMPLETE ARCHIVE · MMXXVI</p></footer>
+</div>
+<script>
+const ARCHIVE=[
+{repo:'SYSWATCH',name:'SYSWATCH',desc:'Remote system health monitoring over authenticated, encrypted TCP.',cat:'SYSTEMS',tags:['networking','security'],tech:['Python','TCP Sockets','TLS','HMAC-SHA256','Flask','SQLite'],fid:'syswatch',d:{problem:'Collect CPU, memory, disk, and network telemetry from many remote machines in real time, without trusting the network between them.',approach:'A multithreaded TCP server owns ingestion; each client authenticates, then streams newline-delimited JSON telemetry on a fixed cadence.',results:'Survives its own flood harness with legitimate clients unaffected.'}},
+{repo:'DualLayerAIModelOwnershipVerification',name:'Dual-Layer Model Ownership',desc:'Proving LLM ownership with weights and with behavior.',cat:'SECURITY',tags:['research','watermarking'],tech:['GPT-2','PyTorch','HuggingFace Transformers','KGW','DCT-SVD'],fid:'model-ownership',d:{results:'99.22% bit-match rate (white-box) · z-score 7.43 (black-box).'}},
+{repo:'AlzheimersARProject',name:'MEMORA',desc:'Identity-aware memory retrieval with voice interaction.',cat:'MULTIMODAL',tags:['rag','voice','biometrics'],tech:['ArcFace','ECAPA-TDNN','ChromaDB','Qwen','Whisper','Coqui TTS'],fid:'memora',d:{problem:'A memory assistant for Alzheimer’s patients must know who it is talking to, recall only true personal context, and stay calm and predictable.',approach:'Fuse face and voice biometrics into a stable identity, retrieve memories through a grounded RAG pipeline, and speak through low-latency STT/TTS.'}},
+{repo:'CreditRiskManagementModel',name:'Credit Risk Ensemble',desc:'High-recall defaulter detection over 2M borrower records.',cat:'ML / DATA',tags:['ensemble','decision-systems'],tech:['CatBoost','XGBoost','HistGradientBoosting','Scikit-Learn'],fid:'credit-risk',d:{problem:'Missed defaulters cost far more than false alarms: recall first on a large, imbalanced, 115-feature borrower dataset.',approach:'Three diverse gradient-boosting models combined by a logistic-regression meta-model; 5-fold cross-validation with heavy false-negative penalties.'}},
+{repo:'AutoBooks',name:'AutoBooks',desc:'Agentic accounting: documents in, posted ledger out.',cat:'APPLIED AI',tags:['rag','documents'],tech:['Self-RAG','Tesseract OCR','ChromaDB','OpenPyXL'],d:{approach:'A Self-RAG loop: extract fields, score confidence, then auto-post, consult learned rules, or ask the user and learn from the answer.',results:'Every posting carries a confidence score: AUTO_POSTED or USER_CONFIRMED.'}},
+{repo:'AgentBackup',name:'AgentBackup',desc:'Local-first voice assistant that can be interrupted.',cat:'LLM / RAG',tags:['voice','local-ai'],tech:['Ollama','RealtimeSTT','Kokoro TTS'],d:{approach:'Realtime local STT feeds a local LLM; complete sentences dispatch to streaming TTS on a separate thread, with ESC as a hard interrupt. Web search only when the query needs current information.'}},
+{repo:'PrivateRAGEngine',name:'PrivateRAG Engine',desc:'Local-first RAG over private documents with grounded, source-backed answers.',cat:'LLM / RAG',tags:['privacy','retrieval'],tech:['LangChain','ChromaDB','BAAI/bge-m3','Ollama'],d:{problem:'Query private PDFs, Word, and PowerPoint files without sending anything to the cloud.',approach:'Chunked ingestion with change detection, persistent ChromaDB vectors, and strictly grounded generation that states when information is missing.',features:['Automatic document change detection and reindexing','Configurable chunk overlap and retrieval depth','Interactive terminal Q&A with transparent source reporting']}},
+{repo:'moderncrag',name:'ModernCRAG',desc:'Evaluation-driven corrective RAG: grade every chunk before generating.',cat:'LLM / RAG',tags:['research','evaluation'],tech:['LangChain','Ollama','BAAI/bge-m3','ChromaDB','DuckDuckGo'],fid:'moderncrag',d:{problem:'Single-shot retrieval fails silently: the generator hallucinates or refuses, and the user cannot tell which happened.',approach:'An LLM evaluator scores every retrieved chunk; weak context is rejected at chunk, sentence, and source level, and knowledge gaps trigger query rewriting plus live web search.',features:['Three-tier rejection: chunk gate, sentence refinement, verdict routing','Fused grader-plus-rewriter call with text-mode fallbacks','Circuit breakers with explicit provenance notices and a labeled parametric fallback']}},
+{repo:'Smart_Memory_LLM',name:'Smart Memory LLM',desc:'Conversational assistant with long-term vector memory and user profiling.',cat:'LLM / RAG',tags:['memory','agents'],tech:['Sentence Transformers','SQLite','Ollama'],d:{approach:'Conversation turns are embedded and recalled by hybrid similarity-plus-importance scoring; an LLM query analyzer decides on web search, extracts personal facts, and scores memory importance.',features:['Importance-weighted forgetting to bound database size','Streaming responses with keyboard interrupt','Multi-engine web search with exponential-backoff retries']}},
+{repo:'Dict_methods',name:'Dict Methods',desc:'Personal AI assistant with vector memory, profile learning, and robust web search.',cat:'LLM / RAG',tags:['memory','agents'],tech:['Sentence Transformers','SQLite','Ollama'],d:{approach:'SQLite-backed conversation store with semantic embeddings, automatic importance scoring and tagging, and an intent analyzer that routes queries to web search only when needed.'}},
+{repo:'Brainstormingrig',name:'Brainstorming Rig',desc:'Streamlit brainstorming workbench with document grounding and persistent chat.',cat:'LLM / RAG',tags:['apps','retrieval'],tech:['Streamlit','llama-cpp-python','SQLite'],d:{approach:'Local Qwen3 reasoning plus Mistral document generation over uploaded TXT/MD/PDF/DOCX, with DuckDuckGo/Bing enrichment and SQLite-backed session history.',features:['Persistent multi-session chat history','One-click polished Markdown document generation from any response']}},
+{repo:'multiagentresearchprompts',name:'Multi-Agent Research Prompts',desc:'Structured prompt library for research, ecommerce, content, and QA agent workflows.',cat:'LLM / RAG',tags:['prompts','agents'],tech:['Prompt Engineering'],d:{approach:'Phase-gated prompt protocols (discovery, extraction, analysis, synthesis) with explicit delivery formats and quality standards per workflow.'}},
+{repo:'parlant',name:'Parlant',desc:'LLM agents that reliably follow behavioral guidelines instead of loose prompts.',cat:'LLM / RAG',tags:['agents','framework'],tech:['Python'],d:{approach:'Natural-language guidelines with contextual matching, tool attachment, journeys, and canned responses, plus full explainability of agent decisions.'}},
+{repo:'IITMSolidworksBackup',name:'SolidWorks Component Counter',desc:'Exact-count prediction of mechanical parts via a CNN + YOLO hybrid.',cat:'VISION',tags:['detection','counting'],tech:['PyTorch','YOLOv8','EfficientNet','ResNet','OpenCV'],d:{problem:'Partial correctness is meaningless in part counting: all four component counts must match exactly.',approach:'A shared-backbone multi-head CNN regresses per-class densities while YOLOv8 verifies spatially; predictions fuse 0.7/0.3 with test-time augmentation.',features:['Exact-match metric as the sole success criterion','Label-safe augmentation that never destroys count information','Edge-ready backbone swapping and deterministic inference']}},
+{repo:'LTDefectDetectionBackup',name:'Building Defect Detection',desc:'Vision-language pipeline for structural defects: detection plus plain-English description.',cat:'VISION',tags:['detection','captioning'],tech:['YOLOv8','Grounding DINO','BLIP-2','PyTorch'],d:{approach:'Grounding DINO provides text-conditioned, zero-shot defect localization while BLIP-2 generates natural-language descriptions of the damage for inspection reports.'}},
+{repo:'ProjectRootAssetsBackup',name:'Medical Image Classification',desc:'Brain-MRI and kidney-CT classification with vision transformers.',cat:'VISION',tags:['medical','transformers'],tech:['PyTorch','DeiT','Swin Transformer'],d:{approach:'Two-stage transfer learning: frozen-backbone feature extraction, then low-learning-rate fine-tuning, with weighted sampling for class imbalance, mixed precision, and automatic checkpoint resume.'}},
+{repo:'tts_loop_agent',name:'TTS Loop Agent',desc:'Local voice agent: speech in, streaming speech out, search when needed.',cat:'VOICE',tags:['local-ai','streaming'],tech:['Ollama','RealtimeSTT','Kokoro TTS'],d:{approach:'Modular STT/LLM/TTS initialization with threaded streaming synthesis, ESC interruption, DuckDuckGo fallback for current information, and text-mode fallback without a microphone.'}},
+{repo:'MarketMomentum',name:'MarketMomentum',desc:'Stock-price prediction with gradient boosting and visual evaluation.',cat:'ML / DATA',tags:['forecasting','finance'],tech:['XGBoost','Scikit-Learn','Pandas'],d:{approach:'XGBoost trained on CSV stock histories with actual-vs-predicted visualization and standard error-metric evaluation.'}},
+{repo:'RiskPatrol',name:'RiskPatrol',desc:'Risk-based proctoring from mouse and keystroke behavior.',cat:'ML / DATA',tags:['security','behavioral'],tech:['PyTorch','Transformers','Socket.IO'],d:{problem:'Ensure assessment integrity while minimizing intrusive surveillance.',approach:'An Anomaly Transformer trained on synthetic normal/suspicious interaction sessions classifies behavior into low, medium, and high risk in real time.'}},
+{repo:'SightCVProject',name:'Sight Admissions Modeling',desc:'Synthetic Indian college-admissions dataset with tuned classifiers.',cat:'ML / DATA',tags:['synthetic-data','classification'],tech:['Scikit-Learn','SciPy','Pandas'],d:{approach:'50,000 statistically grounded student records with reservation, quota, and cutoff logic; logistic regression and random forest tuned via grid and randomized search.'}},
+{repo:'vaeanomalydetector',name:'VAE Anomaly Detector',desc:'Variational autoencoder for anomaly detection in tabular data.',cat:'ML / DATA',tags:['anomaly-detection','generative'],tech:['PyTorch','Scikit-Learn'],d:{approach:'Reconstruction error plus KL divergence as the anomaly score, with checkpointed training, resume support, and feature-level anomaly explanations.'}},
+{repo:'IronVault',name:'IronVault',desc:'AI plus blockchain verification for IoT device ecosystems.',cat:'SECURITY',tags:['anomaly-detection','iot'],tech:['PyTorch','LSTM','Isolation Forest'],d:{approach:'An LSTM-enhanced autoencoder ensembles with Isolation Forest for traffic and phishing anomalies, while a blockchain layer verifies device identity and flags hash/signature tampering and risky firmware.'}},
+{repo:'IRIS1.5',name:'IRIS 1.5B Pretraining',desc:'Custom JAX/Flax pretraining engine for a hybrid attention 1.5B model.',cat:'RESEARCH',tags:['pretraining','kernels'],tech:['JAX','Flax'],fid:'iris',launch:'Public launch expected within 4 months.',d:{problem:'Pretrain a 1.5B hybrid model efficiently on unified-memory hardware.',approach:'Interleaved 3:1 KDA-to-SDPA layers: chunk-parallel linear recurrences for speed, full causal attention every fourth layer for global context.',features:['Three-stage FlashLinearAttention kernel with a Neumann-series matrix solver','Non-blocking asynchronous checkpointing with atomic swaps','Fused single-sync diagnostics and zero-copy prefetching with a live telemetry HUD']}},
+{repo:'FLOWTIMEOUTMANAGERCNSDN',name:'SDN Flow Timeout Manager',desc:'Idle and hard timeout enforcement for OpenFlow tables via POX.',cat:'SYSTEMS',tags:['networking','academic'],tech:['Python','POX','OpenFlow','Mininet'],d:{approach:'A POX controller runs an L2 learning switch that installs flows with 10s idle and hard timeouts, preventing table exhaustion and dropping stale entries automatically.'}},
+{repo:'OSJackfruit',name:'OSJackfruit Runtime',desc:'Lightweight Linux container runtime in C with a kernel memory monitor.',cat:'SYSTEMS',tags:['containers','kernel'],tech:['C','Linux Namespaces','Kernel Module'],d:{approach:'Namespace-isolated containers under a long-running supervisor with pipe-based log capture, a UNIX-socket control plane, and a kernel module enforcing per-container memory limits.'}},
+{repo:'OSMINIPROJECT',name:'OS Mini Project Runtime',desc:'Multi-container runtime: supervisor daemon, bounded logging, kernel enforcement.',cat:'SYSTEMS',tags:['containers','kernel'],tech:['C','Linux Namespaces','Kernel Module'],d:{approach:'Clone-based namespace isolation with chroot filesystems, mutex plus condition-variable bounded log buffers, and a kernel timer that warns on soft RSS limits and kills on hard ones.',features:['SIGCHLD-safe supervisor with termination classification','Scheduler experiments contrasting CPU-bound and I/O-bound contention']}},
+{repo:'PES2UG24AM046pesvcs',name:'PESVCS',desc:'A version-control system built from scratch on content-addressed storage.',cat:'SYSTEMS',tags:['academic','filesystems'],tech:['C','SHA-256'],d:{approach:'Blobs, trees, and commits addressed by SHA-256 with sharded object storage, atomic writes, a text staging index, and branch references: Git internals reimplemented in C.'}},
+{repo:'bulkcompressor',name:'BulkCompressor',desc:'Multithreaded media compression with dedup, resume, and verification.',cat:'SYSTEMS',tags:['tools','media'],tech:['Python','FFmpeg','Ghostscript','Pillow'],d:{approach:'Thread-pool compression across images, video, audio, and PDFs with SHA-256 duplicate detection, checkpoint resume, replace-only-if-smaller safety, and an independent decode-verification plus quarantine pipeline.'}},
+{repo:'DirectoryMapper',name:'DirectoryMapper',desc:'LLM-oriented directory maps: structure, sizes, and code summaries.',cat:'TOOLS',tags:['developer-tools','llm-context'],tech:['Python'],d:{approach:'Pure-stdlib scanner emitting ASCII trees with per-file intelligence (imports and definitions for code, headers for docs), plus gitignore handling, caching, depth limits, and token-budget pruning.'}},
+{repo:'BeatHarvest',name:'BeatHarvest',desc:'Spotify album/playlist audio harvesting in high-quality FLAC.',cat:'TOOLS',tags:['media','automation'],tech:['Python','yt-dlp','Spotipy','FFmpeg'],d:{approach:'Spotify API metadata drives best-match YouTube audio retrieval with FFmpeg post-processing to FLAC.'}},
+{repo:'YTHarvester',name:'YTHarvester',desc:'YouTube toolkit: playlists, audio extraction, and timestamp segments.',cat:'TOOLS',tags:['media','automation'],tech:['Python','yt-dlp','FFmpeg'],d:{approach:'Specialized utilities for full downloads, playlist monitoring with progress bars, and FFmpeg-precise timestamp clipping into independent files, with retries and quality fallback throughout.'}},
+{repo:'pesuslidedownloadautomator',name:'PESU Slide Automator',desc:'Authenticated course-resource downloader for the PESU Academy portal.',cat:'TOOLS',tags:['automation','browser'],tech:['Python','Playwright','PyPDF2'],d:{approach:'Playwright session handling with topic-aware filenames, authenticated Vimeo/AV-summary capture, integrity quarantine, checkpoint resume, and Office-to-PDF conversion plus per-category merging.'}},
+{repo:'STARTOPIABackup',name:'Startopia',desc:'All-in-one startup ecosystem: marketplace, courses, funding, community.',cat:'WEB',tags:['full-stack','marketplace'],tech:['React','Express','MongoDB','Node.js'],d:{approach:'Express API plus React client covering storefronts, course delivery with certificates, investor dashboards with unit economics, and an idea community with moderation roles.'}},
+{repo:'DAAPROJECT',name:'DAA Project',desc:'Brute-force knapsack, LCS, and external merge sort with analysis.',cat:'ACADEMIC',tags:['algorithms','c'],tech:['C'],d:{approach:'Three classic implementations with recurrence-derived complexity analysis and seeded experimental evaluation against greedy baselines.'}},
+{repo:'OSU3BANANA',name:'Memory Management Lab',desc:'Hands-on virtual memory: paging, copy-on-write, swapping, thrashing.',cat:'ACADEMIC',tags:['systems','c'],tech:['C','Linux'],d:{approach:'Ten-section experimental lab measuring demand paging, page-table behavior, fork COW faults, malloc internals, fragmentation, and the thrashing cliff with screenshots and written analysis.'}},
+{repo:'SE_LAB_1',name:'SE Lab: Requirements & UML',desc:'Requirements engineering and use-case modeling for a service-health portal.',cat:'ACADEMIC',tags:['requirements','uml'],tech:['UML'],d:{approach:'FR/NFR traceability matrix, UML use-case diagram with include/extend chains, and a one-page flow specification for the core monitoring use case.'}},
+{repo:'ECEMaterials',name:'ECE Materials',desc:'Two-gigabyte curated collection of ECE books and research papers.',cat:'ARCHIVE',tags:['collection','reference'],tech:[],d:{}},
+{repo:'SetupNVIDIAGPUforDeepLearning',name:'GPU Setup Guide',desc:'End-to-end NVIDIA GPU setup reference for deep learning on Windows.',cat:'ARCHIVE',tags:['guide','cuda'],tech:['CUDA','PyTorch'],d:{}},
+{repo:'hacktivist211',name:'Profile: hacktivist211',desc:'GitHub profile README: AI systems engineering focus and stack.',cat:'ARCHIVE',tags:['profile'],tech:[],d:{}},
+{repo:'hacktivist01203',name:'Profile: early years',desc:'Earlier GitHub profile README from the start of the AI journey.',cat:'ARCHIVE',tags:['profile'],tech:[],d:{}}
+];
+const CATS=['ALL','SYSTEMS','LLM / RAG','APPLIED AI','MULTIMODAL','VISION','VOICE','ML / DATA','SECURITY','RESEARCH','TOOLS','WEB','ACADEMIC','ARCHIVE'].filter(c=>c==='ALL'||ARCHIVE.some(e=>e.cat===c));
+const pad=n=>String(n+1).padStart(2,'0');
+const hay=e=>`${e.repo} ${e.name} ${e.desc} ${e.tech.join(' ')} ${e.cat} ${e.tags.join(' ')}`.toLowerCase();
+const match=(e,q)=>{const t=q.toLowerCase().split(/[^a-z0-9+#.]+/).filter(Boolean);if(!t.length)return true;const w=new Set(hay(e).split(/[^a-z0-9+#.]+/));return t.every(x=>x.length===1?w.has(x):hay(e).includes(x))};
+let query='',cat='ALL',open=null;
+const list=$('#list'),showing=$('#showing'),empty=$('#empty'),chips=$('#chips');
+const domains=new Set(ARCHIVE.map(e=>e.cat)).size;
+$('#count').textContent=`${ARCHIVE.length} PROJECTS · ${domains} DOMAINS`;
+function detail(e){
+  const d=e.d||{};let h='';
+  if(e.launch)h+=`<p class="launch">${e.launch.toUpperCase()}</p>`;
+  if(d.problem)h+=`<div><h4>Problem</h4><p>${d.problem}</p></div>`;
+  if(d.approach)h+=`<div><h4>Approach</h4><p>${d.approach}</p></div>`;
+  if(d.features&&d.features.length)h+=`<div><h4>Notable mechanisms</h4><ul>${d.features.map(f=>`<li>${f}</li>`).join('')}</ul></div>`;
+  if(d.results)h+=`<div><h4>Outcome</h4><p class="outcome">${d.results}</p></div>`;
+  if(e.tech.length)h+=`<p class="stack">${e.tech.join('  ·  ')}</p>`;
+  h+=`<a class="repo" href="https://github.com/hacktivist211/${e.repo}" target="_blank" rel="noreferrer">${e.repo} ↗</a>`;
+  return h;
+}
+function render(){
+  const vis=ARCHIVE.map((e,i)=>({e,n:i})).filter(({e})=>(cat==='ALL'||e.cat===cat)&&match(e,query));
+  showing.textContent=`SHOWING ${vis.length} OF ${ARCHIVE.length}${query?` FOR “${query.toUpperCase()}”`:''}`;
+  empty.hidden=vis.length!==0;
+  list.innerHTML=vis.map(({e,n})=>{const isOpen=open===e.repo;return `<li class="row"${isOpen?' data-open':''}>
+<button type="button" class="head" aria-expanded="${isOpen}"><span class="num">${pad(n)}</span>
+<span class="main"><span class="name">${e.name}${e.fid?'<span class="flag">FEATURED</span>':''}</span><span class="desc">${e.desc}</span></span>
+<span class="meta"><span class="cat">${e.cat}</span>${e.tech.length?`<span class="tech">${e.tech.slice(0,3).join(' · ')}</span>`:''}</span>
+<span class="glyph">${isOpen?'−':'+'}</span></button>
+<div class="panel"><div class="panel-inner"><div class="detail">${e.fid?`<button type="button" class="flink" data-fid="${e.fid}">OPEN THE FEATURED CASE STUDY ↑</button>`:''}${detail(e)}</div></div></div></li>`}).join('');
+  list.querySelectorAll('.head').forEach((h,i)=>h.addEventListener('click',()=>{const r=vis[i].e.repo;open=open===r?null:r;render()}));
+  list.querySelectorAll('.flink').forEach(b=>b.addEventListener('click',ev=>{ev.stopPropagation();location.href='index.html#work-'+b.dataset.fid}));
+}
+chips.innerHTML=CATS.map(c=>{const n=c==='ALL'?ARCHIVE.length:ARCHIVE.filter(e=>e.cat===c).length;return `<button type="button" class="chip" data-c="${c}" aria-pressed="${c==='ALL'}">${c}<n>${n}</n></button>`}).join('');
+chips.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{cat=ch.dataset.c;chips.querySelectorAll('.chip').forEach(x=>{const on=x===ch;x.toggleAttribute('data-active',on);x.setAttribute('aria-pressed',on)}) ;render()}));
+chips.querySelector('.chip').setAttribute('data-active','');
+$('#q').addEventListener('input',e=>{query=e.target.value;render()});
+render();
+function $(s){return document.querySelector(s)}
+</script>
+</body>
+</html>
